@@ -20,17 +20,17 @@ function CORE1D
 % Geometry specification
 %--------------------------------------------------------------------------
 % Approximate PWR square subassembly dimensions:
-% bottom axial reflector height 
-  botReflHeight = 0; %cm                                                  %INPUT                                     
-% fuel height    
-  fuelHeight = 0; %cm                                                     %INPUT                                          
+% bottom axial reflector height
+  botReflHeight = 50; %cm                                            %INPUT
+% fuel height
+  fuelHeight = 300; %cm                                              %INPUT
 % top axial reflector height
-  topReflHeight = 0; %cm                                                  %INPUT   
+  topReflHeight = 50; %cm                                            %INPUT
 % subassembly flat-to-flat distance
-  f2f = 0; %cm                                                            %INPUT
+  f2f = 21.61; %cm                                                   %INPUT
 
 % axial node height
-  dz = 5; %cm                                                             %INPUT
+  dz = 5; %cm                                                        %INPUT
 
 % number of nodes  
   nReflBot = botReflHeight / dz; 
@@ -47,26 +47,26 @@ function CORE1D
   
 % Average power of one fuel SA (W) is total PWR power divided by the number
 % of fuel SAs:
-  Power = 0;                                                            %INPUT
+  Power = 1.76752E+07;                                               %INPUT
   
 %--------------------------------------------------------------------------
 % Cross sections specification
 %--------------------------------------------------------------------------
 % Material 1: axial reflector
-  axialRefl.Transport  = [0 ; 0];                     %INPUT
-  axialRefl.Absorption = [0 ; 0];                     %INPUT
-  axialRefl.Fission    = [0 ; 0];                     %INPUT
-  axialRefl.Production = [0 ; 0];                     %INPUT
-  axialRefl.Chi        = [0 ; 0];                     %INPUT
-  axialRefl.Scattering = [0 ; 0];                     %INPUT
+  axialRefl.Transport  = [0.3416;0.9431];                            %INPUT
+  axialRefl.Absorption = [0.0029;0.0933];                            %INPUT
+  axialRefl.Fission    = [0.0;0.0];                                  %INPUT
+  axialRefl.Production = [0.0;0.0];                                  %INPUT
+  axialRefl.Chi        = [0.0;0.0];                                  %INPUT
+  axialRefl.Scattering = [2.4673e-04;0.0];                           %INPUT
 
 % Material 2: fuel (3.1 w/o)
-  fuel.Transport =  [0 ; 0];                          %INPUT
-  fuel.Absorption = [0 ; 0];                          %INPUT
-  fuel.Fission    = [0 ; 0];                          %INPUT
-  fuel.Production = [0 ; 0];                          %INPUT
-  fuel.Chi        = [0 ; 0];                          %INPUT
-  fuel.Scattering = [0 ; 0];                          %INPUT
+  fuel.Transport  = [0.2181;0.7850];                                 %INPUT
+  fuel.Absorption = [0.0096;0.0959];                                 %INPUT
+  fuel.Fission    = [0.0024;0.0489];                                 %INPUT
+  fuel.Production = [0.0061;0.1211];                                 %INPUT
+  fuel.Chi        = [1.0;0.0];                                       %INPUT
+  fuel.Scattering = [0.0160;0.0];                                    %INPUT
 
 % transport XS  
   Sig.T = [repmat(axialRefl.Transport,1,nReflBot),...
@@ -97,6 +97,11 @@ function CORE1D
       Sig.T_(ig,:) = [Sig.T(ig,1); interp1(Sig.T(ig,:),1.5:nNodes-0.5)'; Sig.T(ig,nNodes)];
   end
 
+  Sig.T
+  Sig.T(ig,1)
+  size(interp1(Sig.T(ig,:),1.5:nNodes-0.5)')
+  Sig.T(ig,nNodes)
+  
   D_ = 1 ./ (3*Sig.T_);
   
 % Energy (J) released per fission
@@ -115,6 +120,8 @@ function CORE1D
   nInner = 1;
   nOuter = 1;
   
+  residual = [ ];
+  
 % Loop for outer (power) iterations over the eigenvalue (k-eff)
   while nInner > 0
 
@@ -125,7 +132,7 @@ function CORE1D
 
     % Evaluate the gradient by a simple finite difference scheme
       dfidz = [(fi(:,1)-0)/(0.5*dz), diff(fi,1,2)/dz, (0-fi(:,nNodes))/(0.5*dz)];
-    % Fick's law 
+    % Fick's law
       J = -D_ .* dfidz;
     % Leakage rate (scalar):
       lRate = sum(-J(:,1)*az + J(:,nEdges)*az, 1);
@@ -144,13 +151,19 @@ function CORE1D
 
     %-----------------------------------------------------------------------
     % Relative residual reduction factor
-      errtol = 1.e-6;                                                      % INPUT
+      errtol = 1.e-6;                                                %INPUT
     % maximum number of iterations
-      maxit = 2000;                                                        % INPUT
+      maxit = 2000;                                                  %INPUT
     % Solver of a system of linear algebraic equations:
-    % http://www4.ncsu.edu/~ctk/matlab_roots.html
-      [solution, r, nInner] = bicgstab_(guess, RHS, @funCORE1D, [errtol maxit]);
+      [solution, flag, resrel, nInner, resvec] = bicgstab(@funCORE1D, RHS, errtol, maxit, [], [], guess);
+    % Save relative residual
+      residual = [residual; resrel];
       
+    % Alternative solver from http://www4.ncsu.edu/~ctk/matlab_roots.html
+    % [solution, r, nInner] = bicgstab_(guess, RHS, @funCORE1D, [errtol maxit]);
+    % Save relative residual
+    % residual = [residual; r(end)/norm(RHS)];
+
       nOuter = nOuter + 1;
 
       fi = reshape(solution,nGroups,nNodes);
@@ -162,7 +175,7 @@ function CORE1D
       fi = fi * Power/pow;
     
     % Print on the screen multiplication factor and outer iteration number
-      fprintf('keff = %9.5f nOuter=%4i nInner=%4i residual=%12.5e\n',keff,nOuter,nInner,r(end)/norm(RHS));
+      fprintf('keff = %9.5f #nOuter = %3i nInner = %5.1f residual = %11.5e\n', keff, nOuter, nInner, residual(end));
         
   end
   
@@ -215,7 +228,7 @@ function CORE1D
   xlabel('z (cm)')
   ylabel('Neutron flux (n/cm2s)')
   legend('Fast','Thermal','Location','best')
-  saveas(f, 'Fig_01_Neutron_Flux.pdf');
+  saveas(f, 'DIF_01_flux.pdf');
   
   f = figure('visible','off');
   plot(zEdges,J(1,:), '-or', ...
@@ -224,5 +237,5 @@ function CORE1D
   xlabel('x (cm)')
   ylabel('Neutron net current (n/cm2s)')
   legend('Fast','Thermal','Location','best')
-  saveas(f, 'Fig_02_Neutron_Net_Current.pdf');
+  saveas(f, 'DIF_02_current.pdf');
 end

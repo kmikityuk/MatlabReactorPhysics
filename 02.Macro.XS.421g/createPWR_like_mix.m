@@ -18,35 +18,35 @@ function createPWR_like_mix
   PWRmix.ng = 421;
 
 % Path to library:
-  path(path,'..\00.Lib');
+  path(path,['..' filesep '00.Lib']);
   
 % Input and initialize the geometry of the PWR-like unit cell (the function
 % is in '..\00.Lib')
   input_and_initialize_PWR_like;
 
 % Path to microscopic cross section data:
-  path(path,'..\01.Micro.XS.421g');                                        % INPUT
+  path(path,['..' filesep '01.Micro.XS.421g']);                     % INPUT
 
 %--------------------------------------------------------------------------  
 % Call the functions for UO2 isotopes and store the data in the structures.
 % As an example it is done below for temperature of 600K.
 % Change when other parameters needed.
-  U235 = micro_U_235__600K;                                                % INPUT
-  U238 = micro_U_238__600K;                                                % INPUT
-  O16 = micro_O_016__600K;                                                 % INPUT  
+  U235 = micro_U_235__600K;                                         % INPUT
+  U238 = micro_U_238__600K;                                         % INPUT
+  O16 = micro_O_016__600K;                                          % INPUT  
   PWRmix.eg = U235.eg;
 
 % UO2 ceramic fuel is manufactured with the density lower than the
 % theoretical density. The deviation is characterized with porosity which
 % is the volume of voids over the total volume of the material. 0.05 (95%
 % of theoretical density) is a typical value for UO2_03.
-  por = 0.05;                                                              % INPUT
+  por = 0.05;                                                       % INPUT
 
   
 % Uranium is composed of two uranium isotopes: U235 and U238, the mass
 % fraction of the U235 isotopes is called enrichment. We will used molar
 % enrichment for simplicity (this is input data to be changed when needed):
-  molEnrich = 0.03;                                                        % INPUT
+  molEnrich = 0.03;                                                 % INPUT
   
 % The molar fractions of U235 and U238 are as follows:
   molFrU(1) = molEnrich;
@@ -56,9 +56,9 @@ function createPWR_like_mix
   UO2_03.aw = U235.aw*molFrU(1) + U238.aw*molFrU(2) + O16.aw*2.0;
 
 % Path to material properties:
-  path(path,'..\00.LIB');
+  path(path,['..' filesep '00.Lib']);
 % The function returns material properties of UO2 in structure fuel
-  [fuel, ~, ~] = matpro({}, {});
+  [fuel, ~, ~] = matpro({}, {}, {});
   
 % The UO2 fuel density is theoretical density times 1 - porosity:
   UO2_03.den = fuel.rho * 1e-3 * (1 - por); % [g/cm3]
@@ -80,13 +80,13 @@ function createPWR_like_mix
 % Call the functions for Zr isotopes and store the data in the structures.
 % As an example it is done below for 600K, change when other temperatures
 % needed:
-  Zr90 = micro_ZR090__600K;                                                % INPUT
-  Zr91 = micro_ZR091__600K;                                                % INPUT
-  Zr92 = micro_ZR092__600K;                                                % INPUT
-  Zr94 = micro_ZR094__600K;                                                % INPUT
-  Zr96 = micro_ZR096__600K;                                                % INPUT
+  Zr90 = micro_ZR090__600K;                                         % INPUT
+  Zr91 = micro_ZR091__600K;                                         % INPUT
+  Zr92 = micro_ZR092__600K;                                         % INPUT
+  Zr94 = micro_ZR094__600K;                                         % INPUT
+  Zr96 = micro_ZR096__600K;                                         % INPUT
   
-  Zry.temp = 600;                                                          % INPUT
+  Zry.temp = 600;                                                   % INPUT
   
 % Zircaloy is composed of pure Zirconium (~1% of tin neglected). There are
 % four stable izotopes of zirconium: Zr090, Zr091, Zr092, Zr094 and one
@@ -97,9 +97,9 @@ function createPWR_like_mix
   Zry.aw = Zr90.aw*molFrZr(1) + Zr91.aw*molFrZr(2) + Zr92.aw*molFrZr(3) + Zr94.aw*molFrZr(4) + Zr96.aw*molFrZr(5); 
 
 % Path to material properties:
-  path(path,'..\00.LIB');
+  path(path,['..' filesep '00.Lib']);
 % The function returns material properties of Zry in structure clad
-  [~, ~, clad] = matpro({}, {});
+  [~, ~, clad] = matpro({}, {}, {});
   
 % Zircaloy density:
   Zry.den = clad.rho*1e-3;   % [g/cm3]
@@ -126,14 +126,14 @@ function createPWR_like_mix
 % structures. As an example it is done below for temperature of 600K, 
 % pressure of 16 MPa and boron concentration of 4000 ppm.
 % Change when other parameters needed.
-  H01 = micro_H_001__600K;                                                 % INPUT
-  O16_ = micro_O_016__600K;                                                % INPUT
-  B10 = micro_B_010__600K;                                                 % INPUT
-  B11 = micro_B_011__600K;                                                 % INPUT
+  H01 = micro_H_001__600K;                                          % INPUT
+  O16_ = micro_O_016__600K;                                         % INPUT
+  B10 = micro_B_010__600K;                                          % INPUT
+  B11 = micro_B_011__600K;                                          % INPUT
   
-  H2OB.temp = 600; %K                                                      % INPUT
-  H2OB.p = 16; %MPa                                                        % INPUT
-  H2OB.bConc = 4000e-6; % 1e-6 = 1 ppm                                     % INPUT
+  H2OB.temp = 600; %K                                               % INPUT
+  H2OB.p = 16; %MPa                                                 % INPUT
+  H2OB.bConc = 4000e-6; % 1e-6 = 1 ppm                              % INPUT
   
 % Boron is composed of two stable isotopes: B10 and B11 with the following
 % molar fractions:
@@ -143,7 +143,7 @@ function createPWR_like_mix
   H2OB.aw = 2*H01.aw + O16_.aw + H2OB.bConc * (molFrB(1)*B10.aw + molFrB(2)*B11.aw);
 
 % Path to steam-water properties:
-  path(path,'..\00.XSteam');                                               % INPUT
+  path(path,['..' filesep '00.XSteam']);                            % INPUT
 % The function returns water density at specified pressure (MPa) and 
 % temperature (C):
   density = XSteam('rho_pt', H2OB.p*10, H2OB.temp-273);
@@ -271,19 +271,18 @@ function createPWR_like_mix
 % Finally create the file with macroscopic cross sections
   writeMacroXS(PWRmix,matName);
   
-  UO2_03.numDen(1)
-  UO2_03.numDen(2)
-  UO2_03.numDen(3) 
+  fprintf("\nU235 %f \n", UO2_03.numDen(1))
+  fprintf("U238 %f \n", UO2_03.numDen(2))
+  fprintf("O16 %f \n", UO2_03.numDen(3))
   
-  Zry.numDen(1)
-  Zry.numDen(2)
-  Zry.numDen(3)
-  Zry.numDen(4)
-  Zry.numDen(5)
+  fprintf("\nZr90 %f \n", Zry.numDen(1))
+  fprintf("Zr91 %f \n", Zry.numDen(2))
+  fprintf("Zr92 %f \n", Zry.numDen(3))
+  fprintf("Zr94 %f \n", Zry.numDen(4))
+  fprintf("Zr96 %f \n", Zry.numDen(5))
   
-  H2OB.numDen(1)
-  H2OB.numDen(2)
-  H2OB.numDen(3)
-  H2OB.numDen(4)
-  
+  fprintf("\nH2 %f\n", H2OB.numDen(1))
+  fprintf("O16 %f\n", H2OB.numDen(2))
+  fprintf("B10 %f\n", H2OB.numDen(3))
+  fprintf("B11 %f\n", H2OB.numDen(4))
 end

@@ -9,6 +9,9 @@ function initializeCoolant
 
 % Global structures
   global g clad cool
+  
+% Path to steam-water properties:
+  path(path,['..' filesep '00.XSteam']);
 
 % channel flow area (m2)
   cool.aFlow0 = 8.914e-5;                                                  %INPUT

@@ -17,7 +17,7 @@ function createZry
   Zry.ng = 421;
   
 % Path to library:
-  path(path,'..\00.Lib');
+  path(path,['..' filesep '00.Lib']);
   
 % input and initialize the geometry of the PWR unit cell (the function is
 % in '..\00.Lib')
@@ -29,27 +29,27 @@ function createZry
   molFrZr = [0.5145 0.1122 0.1715 0.1738 0.0280];
 
 % Path to microscopic cross section data:
-  path(path,'..\01.Micro.XS.421g');
+  path(path,['..' filesep '01.Micro.XS.421g']);
 
 % Call the functions for Zr isotopes and store the data in the structures.
 % As an example it is done below for 600K, change when other temperatures
 % needed:
-  Zr90 = micro_ZR090__600K;                                                % INPUT
-  Zr91 = micro_ZR091__600K;                                                % INPUT
-  Zr92 = micro_ZR092__600K;                                                % INPUT
-  Zr94 = micro_ZR094__600K;                                                % INPUT
-  Zr96 = micro_ZR096__600K;                                                % INPUT
+  Zr90 = micro_ZR090__600K;                                         % INPUT
+  Zr91 = micro_ZR091__600K;                                         % INPUT
+  Zr92 = micro_ZR092__600K;                                         % INPUT
+  Zr94 = micro_ZR094__600K;                                         % INPUT
+  Zr96 = micro_ZR096__600K;                                         % INPUT
   
-  Zry.temp = 600;                                                          % INPUT
+  Zry.temp = 600;                                                   % INPUT
   Zry.eg = Zr90.eg; 
   
 % Mass of one "average" Zr atom in atomic unit mass [a.u.m.]
   Zry.aw = Zr90.aw*molFrZr(1) + Zr91.aw*molFrZr(2) + Zr92.aw*molFrZr(3) + Zr94.aw*molFrZr(4) + Zr96.aw*molFrZr(5); 
 
 % Path to material properties:
-  path(path,'..\00.LIB');
+  path(path,['..' filesep '00.Lib']);
 % The function returns material properties of Zry in structure clad
-  [~, ~, clad] = matpro({}, {});
+  [~, ~, clad] = matpro({}, {}, {});
   
 % Zircaloy density:
   Zry.den = clad.rho*1e-3;   % [g/cm3]
