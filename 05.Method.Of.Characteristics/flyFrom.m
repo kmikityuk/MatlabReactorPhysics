@@ -1,7 +1,7 @@
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % Given coordinate ix, iy the function flyFrom updates angular flux in
 % the neighbouring node according to the direction of the neutron fly

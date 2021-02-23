@@ -1,7 +1,7 @@
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % The function is called by ode15s and, given the time t and the vector of
 % uknowns y, returns the right-hand sides of the matrix
@@ -364,8 +364,8 @@ function out = funRHS(t, y)
 % REACTOR KINETICS
 %--------------------------------------------------------------------------
 
-  rate_of_power = (kin.reac-sum(kin.beff))*fuel.pow/kin.tLife+kin.lmb*kin.cDNP;
-  rate_of_cDNP = kin.beff'/kin.tLife*fuel.pow-kin.lmb'.*kin.cDNP;
+  rate_of_power = 0;
+  rate_of_cDNP = 0;
 
 %--------------------------------------------------------------------------
 % FUEL ROD THERMAL CALCULATIONS

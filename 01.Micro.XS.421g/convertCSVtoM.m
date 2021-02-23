@@ -1,7 +1,7 @@
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % The function scans the current folder for the files with the extension
 % .CSV which are microscopic cross sections in 421 energy group structure
@@ -310,7 +310,7 @@ end
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % The function searches matrix m for cross sections sig from file mf=3 for
 % reaction mt and temperature ntt and and returns sig(ng,nSig0), where ng
@@ -356,7 +356,7 @@ end
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % The function reads cross sections from file 6 for reaction mt and 
 % temperature index ntt from matrix m and returns the 2D cell matrix 
@@ -421,7 +421,7 @@ end
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % The function reads n words from row iRow of matrix m and returns them in
 % vector a together with the new row number iRowNew, i.e. the row where the

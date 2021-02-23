@@ -1,7 +1,7 @@
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % The function fly calculates the angular group flux fiB in node B
 % given the angular group flux fiA in node A, the source (qAB) of
