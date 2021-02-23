@@ -60,9 +60,9 @@ function thermalHydraulics
                    'Mass', massMatrix, ...
                    'MaxStep', 10, ...
                    'Events',@cladFailureEvent, ...
-                   'RelTol', 1e-6, ...                                     %INPUT
-                   'AbsTol', 1e-4);                                        %INPUT
-  
+                   'RelTol', 1e-6, ...                               %INPUT
+                   'AbsTol', 1e-4);                                  %INPUT
+
 %--------------------------------------------------------------------------
 % Initial guess for unknowns
   y = [...
@@ -92,8 +92,8 @@ function thermalHydraulics
      options = odeset('OutputFcn',@(t,y,flag) writeResults(t,y,flag), ...
                       'Mass', massMatrix, ...
                       'MaxStep', 1e-3, ...
-                      'RelTol', 1e-6, ...                                  %INPUT
-                      'AbsTol', 1e-4);                                     %INPUT
+                      'RelTol', 1e-6, ...                            %INPUT
+                      'AbsTol', 1e-4);                               %INPUT
 
      ode15s(@(t,x) funRHS(t,x), (clad.failTime :g.timeStep: g.timeEnd), y(end,:)', options);
   end

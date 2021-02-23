@@ -1,7 +1,7 @@
 % ---------------------------------------------------------
 % Matlab-based Open-source Reactor Physics Education System
 % ---------------------------------------------------------
-% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2019.
+% Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2017.
 %
 % The function calculates properties for single-phase water, 
 % single-phase steam or homogeneous steam-water mixture using 
@@ -10,7 +10,9 @@
 
 function [pro,Lsat,Vsat] = H2Oeq(p,h)
 
-
+% Path to steam-water properties:
+  path(path,['..' filesep '00.XSteam']);
+  
 % convert enthalpy from J/kg to kJ/kg
   h = h/1e3;
 

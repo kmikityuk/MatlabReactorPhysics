@@ -110,7 +110,7 @@ function input_and_initialize_PWR_like
 % initialize thermal hydraulic parameters ---------------------------------
 
 % Path to steam-water properties:
-  path(path,'..\00.XSteam');
+  path(path,['..' filesep '00.XSteam']);
   th.h0 = XSteam('h_pt', th.p0/10, th.T0-273)*1e3; % water enthalpy at core inlet (J/kg)
   th.h = th.h0*ones(g.nz,1); % initial enthalpy in nodes (kJ/kg)
   th.p = th.p0 * ones(g.nz,1); % initial pressure in nodes (MPa)     

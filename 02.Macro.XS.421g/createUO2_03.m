@@ -17,36 +17,36 @@ function createUO2_03
   UO2_03.ng = 421;
   
 % Path to library:
-  path(path,'..\00.Lib');
+  path(path,['..' filesep '00.Lib']);
   
 % input and initialize the geometry of the PWR unit cell (the function is
 % in '..\00.Lib')
   input_and_initialize_PWR_like;
 
 % Path to microscopic cross section data:
-  path(path,'..\01.Micro.XS.421g');                                        % INPUT
+  path(path,['..' filesep '01.Micro.XS.421g']);                     % INPUT
   
 % Call the functions for UO2 isotopes and store the data in the structures.
 % As an example it is done below for temperature of 900 K.
 % Change when other parameters needed.
-  U235 = micro_U_235__900K;                                                % INPUT
-  U238 = micro_U_238__900K;                                                % INPUT
-  O16 = micro_O_016__900K;                                                 % INPUT
+  U235 = micro_U_235__900K;                                         % INPUT
+  U238 = micro_U_238__900K;                                         % INPUT
+  O16 = micro_O_016__900K;                                          % INPUT
   
-  UO2_03.temp = 900;                                                       % INPUT
+  UO2_03.temp = 900;                                                % INPUT
   UO2_03.eg = U235.eg;
 
 % UO2 ceramic fuel is manufactured with the density lower than the
 % theoretical density. The deviation is characterized with porosity which
 % is the volume of voids over the total volume of the material. 0.05 (95%
 % of theoretical density) is a typical value for UO2_03.
-  por = 0.05;                                                              % INPUT
+  por = 0.05;                                                       % INPUT
 
   
 % Uranium is composed of two uranium isotopes: U235 and U238, the mass
 % fraction of the U235 isotopes is called enrichment. We will used molar
 % enrichment for simplicity (this is input data to be changed when needed):
-  molEnrich = 0.03;                                                        % INPUT
+  molEnrich = 0.03;                                                 % INPUT
   
 % The molar fractions of U235 and U238 are as follows:
   molFrU(1) = molEnrich;
@@ -56,9 +56,9 @@ function createUO2_03
   UO2_03.aw = U235.aw*molFrU(1) + U238.aw*molFrU(2) + O16.aw*2.0;
 
 % Path to material properties:
-  path(path,'..\00.LIB');
+  path(path,['..' filesep '00.Lib']);
 % The function returns material properties of UO2 in structure fuel
-  [fuel, ~, ~] = matpro({}, {});
+  [fuel, ~, ~] = matpro({}, {}, {});
   
 % The UO2 fuel density is theoretical density times 1 - porosity:
   UO2_03.den = fuel.rho * 1e-3 * (1 - por); % [g/cm3]

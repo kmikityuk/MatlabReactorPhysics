@@ -18,34 +18,34 @@ function createH2OB
   molFrB = [0.199 0.801];
   
 % Path to library:
-  path(path,'..\00.Lib');
+  path(path,['..' filesep '00.Lib']);
   
 % Input and initialize the geometry of the PWR-like unit cell (the function
 % is in '..\00.Lib')
   input_and_initialize_PWR_like;
 
 % Path to microscopic cross section data:
-  path(path,'..\01.Micro.XS.421g');
+  path(path,['..' filesep '01.Micro.XS.421g']);
 
 % Call the functions for H2O and B isotopes and store the data in the
 % structures. As an example it is done below for temperature of 600K, 
 % pressure of 16 MPa and boron concentration of 4000 ppm.
 % Change when other parameters needed.
-  H01 = micro_H_001__600K;                                                 % INPUT
-  O16 = micro_O_016__600K;                                                 % INPUT
-  B10 = micro_B_010__600K;                                                 % INPUT
-  B11 = micro_B_011__600K;                                                 % INPUT
+  H01 = micro_H_001__600K;                                          % INPUT
+  O16 = micro_O_016__600K;                                          % INPUT
+  B10 = micro_B_010__600K;                                          % INPUT
+  B11 = micro_B_011__600K;                                          % INPUT
   
-  H2OB.temp = 600; %K                                                      % INPUT
-  H2OB.p = 16; %MPa                                                        % INPUT
-  H2OB.bConc = 4000e-6; % 1e-6 = 1 ppm                                     % INPUT
+  H2OB.temp = 600; %K                                               % INPUT
+  H2OB.p = 16; %MPa                                                 % INPUT
+  H2OB.bConc = 4000e-6; % 1e-6 = 1 ppm                              % INPUT
   H2OB.eg = H01.eg; 
 
 % Mass of one "average" H2OB molecule in atomic unit mass [a.u.m.]:
   H2OB.aw = 2*H01.aw + O16.aw + H2OB.bConc * (molFrB(1)*B10.aw + molFrB(2)*B11.aw);
 
 % Path to steam-water properties:
-  path(path,'..\00.XSteam');
+  path(path,['..' filesep '00.XSteam']);
 % The function returns water density at specified pressure (MPa) and 
 % temperature (C):
   density = XSteam('rho_pt', H2OB.p*10, H2OB.temp-273);
