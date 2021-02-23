@@ -363,8 +363,9 @@ function out = funRHS(t, y)
 %--------------------------------------------------------------------------
 % REACTOR KINETICS
 %--------------------------------------------------------------------------
-  rate_of_power = 0;                                                       %CODE
-  rate_of_cDNP = 0;                                                        %CODE
+
+  rate_of_power = (kin.reac-sum(kin.beff))*fuel.pow/kin.tLife+kin.lmb*kin.cDNP;
+  rate_of_cDNP = kin.beff'/kin.tLife*fuel.pow-kin.lmb'.*kin.cDNP;
 
 %--------------------------------------------------------------------------
 % FUEL ROD THERMAL CALCULATIONS

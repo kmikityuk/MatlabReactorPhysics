@@ -13,6 +13,10 @@ function initializeFuelRod
 %--------------------------------------------------------------------------
 % FUEL ROD MATERIAL PROPERTIES
 %--------------------------------------------------------------------------
+
+% Path to library:
+  path(path,['..' filesep '00.Lib']);
+
 % correlations for material properties (in folder 00.Lib)
   [fuel, gap, clad] = matpro(fuel, gap, clad);
 

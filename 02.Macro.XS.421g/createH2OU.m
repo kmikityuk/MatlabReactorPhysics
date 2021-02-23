@@ -13,26 +13,26 @@ function createH2OU
   H2OU.ng = 421;
   
 % Path to microscopic cross section data:
-  path(path,'..\01.Micro.XS.421g');                                        % INPUT
+  path(path,['..' filesep '01.Micro.XS.421g']);                     % INPUT
 
 % Call the functions for H2O and B isotopes and store the data in the
 % structures. As an example it is done below for temperature of 294K, 
 % pressure of 7 MPa and boron concentration of 760 ppm.
 % Change when other parameters needed.
-  H01 = micro_H_001__294K;                                                 % INPUT
-  O16 = micro_O_016__294K;                                                 % INPUT
-  U235 = micro_U_235__294K;                                                % INPUT
+  H01 = micro_H_001__294K;                                          % INPUT
+  O16 = micro_O_016__294K;                                          % INPUT
+  U235 = micro_U_235__294K;                                         % INPUT
   
-  H2OU.temp = 294; %K                                                      % INPUT
-  H2OU.p = 0.1; %MPa                                                       % INPUT
-  H2OU.Uconc = 1000e-6; % 1e-6 = 1 ppm                                     % INPUT
+  H2OU.temp = 294; %K                                               % INPUT
+  H2OU.p = 0.1; %MPa                                                % INPUT
+  H2OU.Uconc = 1000e-6; % 1e-6 = 1 ppm                              % INPUT
   H2OU.eg = H01.eg;
 
 % Mass of one "average" H2OU molecule in atomic unit mass [a.u.m.]:
   H2OU.aw = 2*H01.aw + O16.aw + H2OU.Uconc*U235.aw;
 
 % Path to steam-water properties:
-  path(path,'..\00.XSteam');                                               % INPUT
+  path(path,['..' filesep '00.XSteam']);                            % INPUT
 % The function returns water density at specified pressure (MPa) and 
 % temperature (C):
   density = XSteam('rho_pt', H2OU.p/10, H2OU.temp-273);

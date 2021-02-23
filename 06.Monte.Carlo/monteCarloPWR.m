@@ -35,7 +35,7 @@ function monteCarloPWR
 
 %--------------------------------------------------------------------------
 % Path to macroscopic cross section data:
-  path(path,'..\02.Macro.XS.421g');
+  path(path,['..' filesep '02.Macro.XS.421g']);
 % Fill the structures fuel, clad and cool with the cross sections data
   fuel = macro421_UO2_03__900K;                                            % INPUT
   clad = macro421_Zry__600K;                                               % INPUT
@@ -103,7 +103,7 @@ function monteCarloPWR
                % Sample the direction of neutron flight assuming both
                % fission and scattering are isotropic in the lab (a strong
                % assumption!)
-                 teta = acos(2*rand()-1);
+                 teta = pi*rand();
                  phi = 2.0*pi*rand();
                  dirX = sin(teta)*cos(phi);
                  dirY = sin(teta)*sin(phi);
@@ -282,16 +282,17 @@ function monteCarloPWR
 %--------------------------------------------------------------------------
 % Plot the k-effective
   f = figure('visible','off');
-  plot(keff_expected+sigma_keff,'-r');
-  hold on;
   plot(keff_expected,'-r');
   hold on;
-  plot(keff_expected-sigma_keff,'-r');
+  plot(keff_expected+sigma_keff,'--b');
+  hold on;
+  plot(keff_expected-sigma_keff,'--b');
   grid on;
   xlabel('Iteration number');
   ylabel('k-effective');
+  legend('k_{eff}','k_{eff} \pm \sigma')
   axis tight;
-  saveas(f, 'Fig_01_MonteCarlo.pdf');
+  saveas(f, 'MC_01_keff.pdf');
 
 % Plot the spectrum  
   f = figure('visible','off');
@@ -299,6 +300,6 @@ function monteCarloPWR
   grid on;
   xlabel('Energy, eV');
   ylabel('Neutron flux per unit lethargy, a.u.');
-  saveas(f, 'Fig_02_MonteCarlo.pdf');
+  saveas(f, 'MC_02_flux_lethargy.pdf');
 
 end % of function

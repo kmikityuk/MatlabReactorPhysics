@@ -66,8 +66,8 @@ function reactorKinetics
   options = odeset('OutputFcn',@(t,y,flag) writeResults(t,y,flag), ...
                    'Mass', massMatrix, ...
                    'MaxStep', 10, ...
-                   'RelTol', 1e-6, ...                                     %INPUT
-                   'AbsTol', 1e-4);                                        %INPUT
+                   'RelTol', 1e-6, ...                               %INPUT
+                   'AbsTol', 1e-4);                                  %INPUT
   
 %--------------------------------------------------------------------------
 % Initial guess for unknowns
@@ -93,7 +93,7 @@ function reactorKinetics
 %--------------------------------------------------------------------------
 % Time vector for transient before gap closure
   g.timeStep = 0.1; %s
-  g.timeEnd2 = 120;  %s                                                    % INPUT
+  g.timeEnd2 = 120;  %s                                             % INPUT
   g.timeVector = (g.timeEnd1 :g.timeStep: g.timeEnd2);
   
   g.tran = true;
@@ -103,8 +103,8 @@ function reactorKinetics
                    'Mass', massMatrix, ...
                    'Events',@gapClosureEvent, ...
                    'MaxStep', 1e-3, ...
-                   'RelTol', 1e-6, ...                                     %INPUT
-                   'AbsTol', 1e-4);                                        %INPUT
+                   'RelTol', 1e-6, ...                               %INPUT
+                   'AbsTol', 1e-4);                                  %INPUT
 
   [timeGapClosure,y] = ode15s(@(t,x) funRHS(t,x), g.timeVector, y(end,:)', options);
 
@@ -123,8 +123,8 @@ function reactorKinetics
      options = odeset('OutputFcn',@(t,y,flag) writeResults(t,y,flag), ...
                       'Mass', massMatrix, ...
                       'MaxStep', 1e-3, ...
-                      'RelTol', 1e-6, ...                                  %INPUT
-                      'AbsTol', 1e-4);                                     %INPUT
+                      'RelTol', 1e-6, ...                            %INPUT
+                      'AbsTol', 1e-4);                               %INPUT
 
      ode15s(@(t,x) funRHS(t,x), g.timeVector, y(end,:)', options);
   end
