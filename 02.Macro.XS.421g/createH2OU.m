@@ -35,7 +35,7 @@ function createH2OU
   path(path,['..' filesep '00.XSteam']);                            % INPUT
 % The function returns water density at specified pressure (MPa) and 
 % temperature (C):
-  density = XSteam('rho_pt', H2OU.p/10, H2OU.temp-273);
+  density = XSteam('rho_pt', H2OU.p*10, H2OU.temp-273);
 
 % The water density:
   H2OU.den = density *1e-3;  % [g/cm3]

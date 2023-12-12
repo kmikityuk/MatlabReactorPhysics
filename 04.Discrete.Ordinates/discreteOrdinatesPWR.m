@@ -366,8 +366,8 @@ function discreteOrdinatesPWR
   for iy=1:g.nNodesY
       for ix=1:g.nNodesX
           funT(ix,iy) = sum(FI{ix,iy}(1:50),1);
-          funR(ix,iy) = sum(FI{ix,iy}(51:355),1);
-          funF(ix,iy) = sum(FI{ix,iy}(356:421),1);
+          funR(ix,iy) = sum(FI{ix,iy}(51:287),1);
+          funF(ix,iy) = sum(FI{ix,iy}(288:421),1);
       end
   end
   plot2D(g.nNodesX, g.nNodesY, g.delta, funT, 'Thermal flux distribution', 'DO_06_flux_thermal.pdf');

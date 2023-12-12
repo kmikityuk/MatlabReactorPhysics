@@ -313,7 +313,7 @@ end
 % Author: Konstantin Mikityuk, Paul Scherrer Institute, 2015-2021.
 %
 % The function searches matrix m for cross sections sig from file mf=3 for
-% reaction mt and temperature ntt and and returns sig(ng,nSig0), where ng
+% reaction mt and temperature ntt and returns sig(ng,nSig0), where ng
 % is the number of energy groups and nSig0 is the the number of
 % sigma-zeros.
 %

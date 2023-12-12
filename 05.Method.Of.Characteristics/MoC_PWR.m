@@ -404,8 +404,8 @@ function MoC_PWR
   for ix=1:g.nNodes
       for iy=1:g.nNodes
           funT(ix,iy) = sum(FI{ix,iy}(1:50),1);
-          funR(ix,iy) = sum(FI{ix,iy}(51:355),1);
-          funF(ix,iy) = sum(FI{ix,iy}(356:421),1);
+          funR(ix,iy) = sum(FI{ix,iy}(51:287),1);
+          funF(ix,iy) = sum(FI{ix,iy}(288:421),1);
       end
   end
   plot2D(g.nNodes, g.delta, funT, 'Thermal flux distribution', 'MOC_06_flux_thermal.pdf');
